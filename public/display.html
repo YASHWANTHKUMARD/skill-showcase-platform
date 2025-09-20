@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Alumni List</title>
+<style>
+:root {
+--brand: #BE3030;
+--bg: #f9f9f9;
+--radius: 8px;
+--shadow: 0 6px 18px rgba(0,0,0,0.05);
+font-family: system-ui,-apple-system,BlinkMacSystemFont,Segoe
+UI,Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+* {box-sizing:border-box;}
+body {
+margin:0;
+background: var(--bg);
+color: #222;
+line-height:1.4;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+/* HEADER */
+.site-header {
+background: var(--brand);
+color:#fff;
+padding: 0.5rem 1rem;
+display:flex;
+align-items:center;
+gap:1rem;
+flex-wrap:wrap;
+}
+.site-header .logo {
+display:flex;
+align-items:center;
+gap:0.5rem;
+text-decoration:none;
+color:#fff;
+font-weight:700;
+font-size:1.2rem;
+}
+.site-header .logo img {
+height:40px;
+width:auto;
+object-fit:contain;
+border-radius:4px;
+background:#fff;
+padding:2px;
+}
+.site-header .title {
+margin-left: auto;
+font-size:1.1rem;
+letter-spacing:0.5px;
+}
+main {
+flex:1;
+width:100%;
+max-width:1000px;
+margin:1rem auto;
+padding:0 1rem;
+}
+h1 {
+text-align:center;
+font-size:2rem;
+margin-bottom:1rem;
+}
+/* Table styling */
+table {
+width:100%;
+border-collapse:collapse;
+background:#fff;
+border-radius:12px;
+box-shadow: var(--shadow);
+overflow:hidden;
+}
+th, td {
+padding:12px 15px;
+text-align:left;
+}
+thead {
+background: var(--brand);
+color:#fff;
+}
+tr:nth-child(even) {
+background:#f2f2f2;
+}
+tbody tr:hover {
+background: #ffecec;
+}
+/* FOOTER */
+.site-footer {
+background: #BE3030;
+color:#eee;
+padding:1rem 1rem;
+text-align:center;
+font-size:0.85rem;
+}
+.site-footer a {
+color: #fff;
+text-decoration:none;
+font-weight:600;
+}
+</style>
+</head>
+<body>
+<!-- HEADER -->
+<header class="site-header">
+<a href="#" class="logo">
+<img src="https://via.placeholder.com/40" alt="Logo">
+Student registration Portal
+</a>
+<div class="title">Student List</div>
+</header>
+<!-- MAIN -->
+<main>
+<h1>Student Directory</h1>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Batch</th>
+<th>Department</th>
+</tr>
+</thead>
+<tbody id="alumniTable"></tbody>
+</table>
+</main>
+<!-- FOOTER -->
+<footer class="site-footer">
+&copy; 2025 Student Association. All Rights Reserved. | <a
+href="#">Home</a>
+</footer>
+<script>
+async function loadAlumni() {
+try {
+const response = await fetch("/alumni"); // <-- FIXED
+const alumni = await response.json();
+const tableBody = document.getElementById("alumniTable");
+tableBody.innerHTML = "";
+alumni.forEach(a => {
+const row = `<tr>
+<td>${a.name}</td>
+<td>${a.email}</td>
+<td>${a.batch}</td>
+<td>${a.department}</td>
+</tr>`;
+tableBody.innerHTML += row;
+});
+} catch (error) {
+console.error("Error loading alumni:", error);
+}
+}
+loadAlumni();
+</script>
+</body>
+</html>
